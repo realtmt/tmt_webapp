@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { Poppins } from "next/font/google";
-import CountdownTimer from "../components/CountdownTimer";
+import Image from "next/image"
+import { Inter } from "next/font/google"
+import CountdownTimer from "../components/CountdownTimer"
 
-const poppins = Poppins({ subsets: ["latin"], weight: "300" });
+const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
-  return (
-    <section
-      className={`${poppins.className} absolute left-0 top-0 w-full h-full flex justify-center items-center sm:text-2xl md:text-3xl font-light text-center`}
-    >
-      <CountdownTimer />
-    </section>
-  );
+    return (
+        <section
+            className={`${inter.className} left-0 top-0 absolute w-full h-1/2 flex justify-center items-center`}
+        >
+            <CountdownTimer />
+        </section>
+    )
 }

@@ -1,18 +1,18 @@
-import "./globals.css";
+import "./globals.css"
 
 export const metadata = {
-  title: "Take me To",
-  description: "Take me to store",
-};
+    title: "Take me To",
+    description: "Take me to store",
+}
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body className="">{children}</body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className="bg-dark">{children}</body>
+        </html>
+    )
 }
