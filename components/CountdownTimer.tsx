@@ -27,9 +27,11 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <h1>
-      {countdown.days} days, {countdown.hours} hours, {countdown.minutes}{" "}
-      minutes, {countdown.seconds} seconds
+    <h1 className="flex space-x-1 flex-wrap justify-center">
+      <span className="whitespace-nowrap">{countdown.days} days</span>,
+      <span className="whitespace-nowrap">{countdown.hours} hours</span>,
+      <span className="whitespace-nowrap">{countdown.minutes} minutes</span>,
+      <span className="whitespace-nowrap">{countdown.seconds} seconds</span>
     </h1>
   );
 };
