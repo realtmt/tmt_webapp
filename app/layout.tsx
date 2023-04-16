@@ -1,23 +1,12 @@
-import { Session } from "next-auth"
-import { headers } from "next/headers"
-import AuthContext from "./AuthContext"
+import { Poppins } from "next/font/google"
+import Menu from "@/components/Menu"
 
 import "./globals.css"
 
-async function getSession(cookie: string): Promise<Session> {
-    const response = await fetch(
-        `${process.env.LOCAL_AUTH_URL}/api/auth/session`,
-        {
-            headers: {
-                cookie,
-            },
-        }
-    )
-
-    const session = await response.json()
-
-    return Object.keys(session).length > 0 ? session : null
-}
+const poppins = Poppins({
+    subsets: ["latin"],
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+})
 
 export const metadata = {
     title: "Take me To",
@@ -29,11 +18,13 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-    const session = await getSession(headers().get("cookie") ?? "")
     return (
         <html lang="en">
-            <body className="bg-dark">
-                <AuthContext session={session}>{children}</AuthContext>
+            <body
+                className={`${poppins.className} bg-dark text-light subpixel-antialiased`}
+            >
+                <Menu />
+                <main className="px-[150px]">{children}</main>
             </body>
         </html>
     )
