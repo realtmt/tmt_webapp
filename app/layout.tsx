@@ -9,8 +9,8 @@ const poppins = Poppins({
 })
 
 export const metadata = {
-    title: "Take me To",
-    description: "Take me to store",
+    title: "TMT",
+    description: "Take Me To Webapp",
 }
 
 export default async function RootLayout({
@@ -24,7 +24,7 @@ export default async function RootLayout({
                 className={`${poppins.className} bg-dark text-light subpixel-antialiased`}
             >
                 <Menu />
-                <main className="px-[150px]">{children}</main>
+                <main className="px-[50px] lg:px-[150px]">{children}</main>
             </body>
         </html>
     )

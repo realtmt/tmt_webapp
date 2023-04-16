@@ -13,9 +13,9 @@ const items: { title: string; url: string }[] = [
 ]
 
 const navVariant: Variants = {
-    hidden: {
-        translateX: "calc(-100% + 150px)",
-    },
+    hidden: (padding) => ({
+        translateX: `calc(-100% + ${padding}px)`,
+    }),
     visible: {
         translateX: "0%",
         transition: {
@@ -25,15 +25,15 @@ const navVariant: Variants = {
             when: "beforeChildren",
         },
     },
-    exit: {
-        translateX: "calc(-100% + 150px)",
+    exit: (padding) => ({
+        translateX: `calc(-100% + ${padding}px)`,
         transition: {
             type: "spring",
             mass: 0.4,
             damping: 12,
             when: "afterChildren",
         },
-    },
+    }),
 }
 
 const Menu = () => {
@@ -44,19 +44,18 @@ const Menu = () => {
             variants={navVariant}
             initial={"hidden"}
             animate={isOpen ? "visible" : "exit"}
+            custom={window.innerWidth > 1280 ? 150 : 50}
         >
             <section className="relative bg-dark w-full h-full flex justify-center items-center">
                 <button
-                    className="absolute top-0 right-[75px] translate-x-1/2 translate-y-1/2 flex flex-col items-center select-none"
+                    className="absolute top-[15px] lg:top-0 right-[25px] lg:right-[75px] translate-x-1/2 translate-y-1/2 flex flex-col items-center select-none lg:p-[20px] -mt-[20px]"
                     onClick={() => setOpen(!isOpen)}
                 >
                     <svg
-                        width="64"
-                        height="64"
                         viewBox="0 0 64 64"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="stroke-light stroke-[3] transition-all"
+                        className="stroke-light stroke-[3] transition-all lg:w-[64px] lg:h-[64px] w-[48px] h-[48px]"
                     >
                         <motion.path
                             d="M10 24H54"
@@ -73,11 +72,8 @@ const Menu = () => {
                             }}
                         />
                     </svg>
-                    {/* <span className="text-[12px] font-light -mt-2">
-                        {isOpen ? "CLOSE" : "MENU"}
-                    </span> */}
                 </button>
-                <ul className="text-[92px] uppercase font-bold flex flex-col leading-[120%]">
+                <ul className="text-[48px] lg:text-[92px] uppercase font-bold flex flex-col leading-[120%]">
                     {items.map((item, i) => (
                         <li key={i}>
                             <Link href={item.url}>
