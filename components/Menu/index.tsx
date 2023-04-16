@@ -21,7 +21,7 @@ const navVariant: Variants = {
         transition: {
             type: "spring",
             mass: 0.3,
-            staggerChildren: 0.04,
+            staggerChildren: 0.03,
             when: "beforeChildren",
         },
     },
@@ -38,10 +38,10 @@ const navVariant: Variants = {
 
 const Menu = () => {
     const [isOpen, setOpen] = useState(false)
-    const [screen, setScreen] = useState(150)
+    const [screen, setScreen] = useState(1025)
     useEffect(() => {
         const handleResize = () => setScreen(window.innerWidth)
-
+        setScreen(window.innerWidth)
         window.addEventListener("resize", handleResize)
         return () => window.removeEventListener("resize", handleResize)
     }, [])

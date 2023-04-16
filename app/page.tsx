@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Container from "@/components/Container"
+import Canvas from "@/components/3d/Canvas"
 
 export default function Home() {
     return (
@@ -12,6 +13,9 @@ export default function Home() {
                     A beautiful confusion
                 </span>
             </header>
+            <main className="w-full h-full absolute left-0 top-0">
+                <Canvas ready={true} />
+            </main>
         </Container>
     )
 }

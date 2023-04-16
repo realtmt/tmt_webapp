@@ -14,7 +14,8 @@ const itemVariants: Variants = {
         transition: {
             type: "spring",
             mass: 0.2,
-            damping: 9,
+            damping: 12,
+            stiffness: 150,
         },
     },
     exit: {
