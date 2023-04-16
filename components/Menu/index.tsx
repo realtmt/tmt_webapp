@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, Variants } from "framer-motion"
 import OrchestrateTextUp from "../animations/OrchestrateTextUp"
 import Link from "next/link"
@@ -38,13 +38,19 @@ const navVariant: Variants = {
 
 const Menu = () => {
     const [isOpen, setOpen] = useState(false)
+    const [screen, setScreen] = useState(150)
+    useEffect(() => {
+        const handleResize = () => setScreen(window.innerWidth)
+        window.addEventListener("resize", handleResize)
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
     return (
         <motion.nav
             className="fixed top-0 left-0 w-full h-full"
             variants={navVariant}
             initial={"hidden"}
             animate={isOpen ? "visible" : "exit"}
-            custom={window.innerWidth > 1280 ? 150 : 50}
+            custom={screen > 1280 ? 150 : 50}
         >
             <section className="relative bg-dark w-full h-full flex justify-center items-center">
                 <button
