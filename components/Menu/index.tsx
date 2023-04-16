@@ -41,6 +41,7 @@ const Menu = () => {
     const [screen, setScreen] = useState(150)
     useEffect(() => {
         const handleResize = () => setScreen(window.innerWidth)
+
         window.addEventListener("resize", handleResize)
         return () => window.removeEventListener("resize", handleResize)
     }, [])
@@ -50,7 +51,7 @@ const Menu = () => {
             variants={navVariant}
             initial={"hidden"}
             animate={isOpen ? "visible" : "exit"}
-            custom={screen > 1280 ? 150 : 50}
+            custom={screen > 1024 ? 150 : 50}
         >
             <section className="relative bg-dark w-full h-full flex justify-center items-center">
                 <button
