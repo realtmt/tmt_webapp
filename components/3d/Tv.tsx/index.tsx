@@ -31,7 +31,7 @@ export function Tv({ ready, src, ...props }: any) {
             crossOrigin: "Anonymous",
             loop: true,
             muted: true,
-            playsInline: true,
+            playsinline: true,
         })
     )
 
@@ -49,6 +49,7 @@ export function Tv({ ready, src, ...props }: any) {
             window.innerWidth > 1280 ? setPosition(0.5) : setPosition(0)
         }
         resizeHandler()
+        video.setAttribute("playsinline", "true")
         window.addEventListener("resize", resizeHandler)
         return () => window.removeEventListener("resize", resizeHandler)
     }, [])
