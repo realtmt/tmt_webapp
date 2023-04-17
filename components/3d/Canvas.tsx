@@ -30,7 +30,7 @@ const Canvas = ({ ready, setReady, video }: any) => {
         <ThreeCanvas
             dpr={[1, 1.5]}
             shadows
-            camera={{ position: [0, 0, 3], fov: 20 }}
+            camera={{ position: [0, 0, 5], fov: 20 }}
         >
             <fog attach="fog" args={["#141414", 30, 40]} />
             <color attach="background" args={["#17171b"]} />
@@ -50,6 +50,7 @@ const Canvas = ({ ready, setReady, video }: any) => {
                     bottom={-20}
                 />
             </directionalLight>
+
             <group position={[0, -0.5, 0]}>
                 <Tv ready={ready} src={video} />
                 <Backdrop
@@ -86,23 +87,10 @@ const Canvas = ({ ready, setReady, video }: any) => {
                 </mesh>
             </group>
             <Rig />
-            {/* <PerspectiveCamera
-                makeDefault
-                fov={65}
-                position={[-0.5, -0.1, 1.3]}
-            >
-                <spotLight
-                    position={[10, 10, 5]}
-                    angle={0.15}
-                    penumbra={1}
-                    intensity={0.1}
-                    castShadow
-                    shadow-mapSize={[2048, 2048]}
-                />
-            </PerspectiveCamera> */}
+
             {/* <color attach="background" args={["black"]} />
             <AsciiRenderer fgColor="white" bgColor="black" /> */}
-            <OrbitControls makeDefault enableZoom={false} />
+            <OrbitControls makeDefault enableZoom={false} enablePan={false} />
         </ThreeCanvas>
     )
 }
@@ -113,8 +101,8 @@ function Rig() {
     useFrame(() => {
         camera.position.lerp(
             vec.set(
-                Math.sin(mouse.x / 40) * 2 + 0.8,
-                Math.sin(mouse.y / 60) * 2 + 0.3,
+                Math.sin(mouse.x / 20) * 2 + 0.8,
+                Math.sin(mouse.y / 30) * 2 + 0.3,
                 4
             ),
             0.05

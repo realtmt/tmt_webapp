@@ -623,7 +623,7 @@ export function Tv({ ready, src, ...props }: any) {
                                 <videoTexture
                                     attach="map"
                                     args={[video]}
-                                    flipY={false}
+                                    // flipY={false}
                                     // repeat={[5, 9]}
                                     // offset={[-0.1, 0]}
                                     wrapT={THREE.RepeatWrapping}
