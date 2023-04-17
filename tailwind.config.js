@@ -9,6 +9,7 @@ module.exports = {
         colors: {
             dark: "rgb(var(--dark) / <alpha-value>)",
             light: "rgb(var(--light) / <alpha-value>)",
+            theme: "rgb(var(--theme) / <alpha-value>)",
         },
         extend: {
             screens: {

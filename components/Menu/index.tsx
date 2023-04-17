@@ -3,13 +3,14 @@ import { useEffect, useState } from "react"
 import { motion, Variants } from "framer-motion"
 import OrchestrateTextUp from "../animations/OrchestrateTextUp"
 import Link from "next/link"
+import Canvas from "../3d/Canvas"
 
-const items: { title: string; url: string }[] = [
-    { title: "home", url: "/" },
-    { title: "shop", url: "/shop" },
-    { title: "lifestyle", url: "/lifestyle" },
-    { title: "contact", url: "/contact" },
-    { title: "login", url: "/login" },
+const items: { title: string; url: string; src: string }[] = [
+    { title: "home", url: "/", src: "/assets/videos/weird.mp4" },
+    { title: "shop", url: "/shop", src: "/assets/videos/weird.mp4" },
+    { title: "lifestyle", url: "/lifestyle", src: "/assets/videos/bob.mp4" },
+    { title: "contact", url: "/contact", src: "/assets/videos/weird.mp4" },
+    { title: "login", url: "/login", src: "/assets/videos/weird.mp4" },
 ]
 
 const navVariant: Variants = {
@@ -21,6 +22,7 @@ const navVariant: Variants = {
         transition: {
             type: "spring",
             mass: 0.3,
+            delay: 0.3,
             staggerChildren: 0.03,
             when: "beforeChildren",
         },
@@ -31,64 +33,58 @@ const navVariant: Variants = {
             type: "spring",
             mass: 0.4,
             damping: 12,
+
             when: "afterChildren",
         },
     }),
 }
 
-const Menu = () => {
-    const [isOpen, setOpen] = useState(false)
+const Menu = ({ setVideo, setOpen, isOpen }: any) => {
     const [screen, setScreen] = useState(1025)
+    let timeout: NodeJS.Timeout
+
+    const switchChannel = (src: string) => {
+        clearTimeout(timeout)
+        setVideo("/assets/videos/nosignal.mp4")
+        timeout = setTimeout(() => {
+            setVideo(src)
+        }, 300)
+    }
+
     useEffect(() => {
         const handleResize = () => setScreen(window.innerWidth)
         setScreen(window.innerWidth)
         window.addEventListener("resize", handleResize)
         return () => window.removeEventListener("resize", handleResize)
     }, [])
+
     return (
         <motion.nav
-            className="fixed top-0 left-0 w-full h-full"
+            className="fixed top-0 left-0 w-full h-full z-40"
             variants={navVariant}
             initial={"hidden"}
             animate={isOpen ? "visible" : "exit"}
+            exit={"exit"}
             custom={screen > 1024 ? 150 : 50}
         >
-            <section className="relative bg-dark w-full h-full flex justify-center items-center">
-                <button
-                    className="absolute top-[15px] lg:top-0 right-[25px] lg:right-[75px] translate-x-1/2 translate-y-1/2 flex flex-col items-center select-none lg:p-[20px] -mt-[20px]"
-                    onClick={() => setOpen(!isOpen)}
-                >
-                    <svg
-                        viewBox="0 0 64 64"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="stroke-light stroke-[3] transition-all lg:w-[64px] lg:h-[64px] w-[48px] h-[48px]"
-                    >
-                        <motion.path
-                            d="M10 24H54"
-                            animate={{
-                                rotate: isOpen ? "45deg" : "0deg",
-                                y: isOpen ? "9.5px" : "0px",
-                            }}
-                        />
-                        <motion.path
-                            d="M10 43H54"
-                            animate={{
-                                rotate: isOpen ? "-45deg" : "0deg",
-                                y: isOpen ? "-9.5px" : "0px",
-                            }}
-                        />
-                    </svg>
-                </button>
-                <ul className="text-[48px] lg:text-[92px] uppercase font-bold flex flex-col leading-[120%]">
-                    {items.map((item, i) => (
-                        <li key={i}>
-                            <Link href={item.url}>
-                                <OrchestrateTextUp key={i} text={item.title} />
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+            <section className="relative w-full h-full flex justify-center lg:justify-start items-center">
+                <section className="lg:w-1/2 flex justify-center">
+                    <ul className="text-[48px] lg:text-[92px] uppercase font-bold flex flex-col leading-[120%] relative z-10 ">
+                        {items.map((item, i) => (
+                            <li
+                                key={i}
+                                onMouseEnter={() => switchChannel(item.src)}
+                            >
+                                <Link href={item.url}>
+                                    <OrchestrateTextUp
+                                        key={i}
+                                        text={item.title}
+                                    />
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
             </section>
         </motion.nav>
     )

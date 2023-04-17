@@ -1,5 +1,4 @@
 import { Poppins } from "next/font/google"
-import Menu from "@/components/Menu"
 
 import "./globals.css"
 
@@ -23,8 +22,7 @@ export default async function RootLayout({
             <body
                 className={`${poppins.className} bg-dark text-light subpixel-antialiased`}
             >
-                <Menu />
-                <main className="px-[50px] lg:px-[150px]">{children}</main>
+                {children}
             </body>
         </html>
     )

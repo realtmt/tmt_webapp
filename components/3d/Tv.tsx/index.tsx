@@ -8,7 +8,7 @@ title: Retro Television - Mitsubishi
 */
 
 import React, { useRef, useState, useEffect } from "react"
-import { useGLTF } from "@react-three/drei"
+import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei"
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import * as THREE from "three"
 
@@ -19,22 +19,40 @@ type GLTFResult = GLTF & {
     } & any
 }
 
-export function Tv(props: any) {
+export function Tv({ ready, src, ...props }: any) {
+    const [position, setPosition] = useState(0.5)
     const { nodes, materials } = useGLTF(
         "/assets/models/retro_tv.glb"
     ) as unknown as GLTFResult
 
     const [video] = useState(() =>
         Object.assign(document.createElement("video"), {
-            src: "/assets/videos/weird.mp4",
+            src,
             crossOrigin: "Anonymous",
             loop: true,
+            muted: true,
         })
     )
-    useEffect(() => void (props.ready && video.play()), [props.ready, video])
+
+    useEffect(() => {
+        video.src = src
+    }, [src])
+
+    useEffect(
+        () => void (ready && video.play().catch((_) => {})),
+        [ready, video]
+    )
+
+    useEffect(() => {
+        const resizeHandler = () => {
+            window.innerWidth > 1280 ? setPosition(0.5) : setPosition(0)
+        }
+        window.addEventListener("resize", resizeHandler)
+        return () => window.removeEventListener("resize", resizeHandler)
+    })
 
     return (
-        <group {...props} dispose={null}>
+        <group {...props} dispose={null} position={[position, 0, -0.3]}>
             <group rotation={[-Math.PI / 2, 0, 0]}>
                 <group rotation={[Math.PI / 2, 0, 0]}>
                     <group
@@ -601,11 +619,7 @@ export function Tv(props: any) {
                             geometry={nodes.Object_102.geometry}
                             material={materials.Screenshot}
                         >
-                            <meshPhysicalMaterial
-                                clearcoat={1}
-                                clearcoatRoughness={0}
-                                toneMapped={false}
-                            >
+                            <meshStandardMaterial color={"white"}>
                                 <videoTexture
                                     attach="map"
                                     args={[video]}
@@ -616,7 +630,7 @@ export function Tv(props: any) {
                                     wrapS={THREE.RepeatWrapping}
                                     encoding={THREE.sRGBEncoding}
                                 />
-                            </meshPhysicalMaterial>
+                            </meshStandardMaterial>
                         </mesh>
                     </group>
                 </group>
@@ -625,4 +639,4 @@ export function Tv(props: any) {
     )
 }
 
-useGLTF.preload("/retro_tv.glb")
+useGLTF.preload("/assets/models/retro_tv.glb")
