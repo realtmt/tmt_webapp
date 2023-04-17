@@ -30,7 +30,7 @@ const Canvas = ({ ready, setReady, video }: any) => {
         <ThreeCanvas
             dpr={[1, 1.5]}
             shadows
-            camera={{ position: [0, 0, 5], fov: 20 }}
+            camera={{ position: [0, 0, 3], fov: 45 }}
         >
             <fog attach="fog" args={["#141414", 30, 40]} />
             <color attach="background" args={["#17171b"]} />
@@ -42,13 +42,14 @@ const Canvas = ({ ready, setReady, video }: any) => {
                 position={[10, 6, 6]}
                 shadow-mapSize={[1024, 1024]}
             >
-                <orthographicCamera
+                {/* <orthographicCamera
                     attach="shadow-camera"
                     left={-20}
                     right={20}
                     top={20}
                     bottom={-20}
-                />
+                /> */}
+                {/* <perspectiveCamera fov={45} /> */}
             </directionalLight>
 
             <group position={[0, -0.5, 0]}>
@@ -90,7 +91,12 @@ const Canvas = ({ ready, setReady, video }: any) => {
 
             {/* <color attach="background" args={["black"]} />
             <AsciiRenderer fgColor="white" bgColor="black" /> */}
-            <OrbitControls makeDefault enableZoom={false} enablePan={false} />
+            {/* <OrbitControls
+                makeDefault
+                enableZoom={false}
+                enablePan={false}
+                enabled={false}
+            /> */}
         </ThreeCanvas>
     )
 }
@@ -101,9 +107,9 @@ function Rig() {
     useFrame(() => {
         camera.position.lerp(
             vec.set(
-                Math.sin(mouse.x / 20) * 2 + 0.8,
-                Math.sin(mouse.y / 30) * 2 + 0.3,
-                4
+                Math.sin(mouse.x / 30) * 1.5 - 0.2,
+                Math.sin(mouse.y / 60) * 1.5,
+                2
             ),
             0.05
         )
@@ -115,7 +121,7 @@ function Rig() {
             maxRoll={0.02}
             yawFrequency={0.1}
             pitchFrequency={0.1}
-            rollFrequency={0}
+            rollFrequency={0.2}
         />
     )
 }
