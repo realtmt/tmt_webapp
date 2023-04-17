@@ -31,6 +31,7 @@ export function Tv({ ready, src, ...props }: any) {
             crossOrigin: "Anonymous",
             loop: true,
             muted: true,
+            playsInline: true,
         })
     )
 
