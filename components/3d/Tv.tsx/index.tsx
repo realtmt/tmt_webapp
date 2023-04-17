@@ -49,7 +49,7 @@ export function Tv({ ready, src, ...props }: any) {
         }
         window.addEventListener("resize", resizeHandler)
         return () => window.removeEventListener("resize", resizeHandler)
-    })
+    }, [])
 
     return (
         <group {...props} dispose={null} position={[position, 0, -0.3]}>
