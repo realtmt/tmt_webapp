@@ -47,6 +47,7 @@ export function Tv({ ready, src, ...props }: any) {
         const resizeHandler = () => {
             window.innerWidth > 1280 ? setPosition(0.5) : setPosition(0)
         }
+        resizeHandler()
         window.addEventListener("resize", resizeHandler)
         return () => window.removeEventListener("resize", resizeHandler)
     }, [])
