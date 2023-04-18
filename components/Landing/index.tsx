@@ -6,6 +6,7 @@ import Menu from "@/components/Menu"
 import Button from "@/components/Button"
 import { Suspense, useState, cloneElement, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import { PlayIcon } from "@heroicons/react/24/outline"
 
 function Ready({ setReady }: any) {
     useEffect(() => () => void setReady(true), [])
@@ -80,7 +81,7 @@ const Landing = () => {
                         </motion.section>
                     )}
                 </AnimatePresence>
-                <main className="w-full h-full absolute left-0 top-0 z-0">
+                <main className="w-full h-full absolute left-0 top-0 ">
                     <Canvas
                         ready={ready && video}
                         setReady={setReady}
@@ -94,22 +95,7 @@ const Landing = () => {
                         onClick={() => setClicked(true)}
                         loading={!ready}
                         text="play"
-                        icon={
-                            <motion.svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-6 lg:w-[36px] h-6 lg:h-[36px] text-light"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-                                />
-                            </motion.svg>
-                        }
+                        icon={<PlayIcon />}
                     />
                 </section>
             )}

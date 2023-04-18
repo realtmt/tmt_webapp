@@ -12,16 +12,27 @@ const Button: React.FC<Props> = ({ onClick, loading = false, text, icon }) => {
     return (
         <button
             onClick={() => onClick()}
-            className="w-[200px] lg:w-[300px] h-[50px] lg:h-[75px] flex flex-col border border-light disabled:border-light/30 transition-all group overflow-hidden disabled:animate-none animate-pulse shadow-md shadow-light/50 disabled:shadow-dark/50"
+            className="w-[200px] lg:w-[300px] h-[50px] lg:h-[75px] cursor-pointer disabled:cursor-wait flex flex-col border border-light disabled:border-light/30 transition-all group overflow-hidden shadow-md shadow-light/50 disabled:shadow-dark/50"
             disabled={loading}
         >
             <span className="flex justify-end items-center h-full w-full transition-all flex-shrink-0">
                 <span className="w-[124px] lg:w-[186px] flex-shrink-0  flex justify-center items-center h-full capitalize text-[24px] lg:text-[36px] group-disabled:text-light/30 text-light/90 transition-all overflow-hidden duration-300 ease-out whitespace-nowrap">
-                    {text}
+                    {loading ? (
+                        text
+                    ) : (
+                        <span className="w-full h-full transition  ease-[cubic-bezier(0.86,0,0.7,1)] duration-400 relative group-hover:bg-light">
+                            <span className="text-light bottom-1/2 left-1/2 translate-y-1/2 -translate-x-1/2 absolute group-hover:bottom-[200%] transition-all ease-[cubic-bezier(0.86,0,0.7,1)] duration-400 delay-0">
+                                {text}
+                            </span>
+                            <span className="text-dark group-hover:top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute top-[200%] transition-all ease-[cubic-bezier(0.86,0,0.7,1)] duration-400 delay-0">
+                                {text}
+                            </span>
+                        </span>
+                    )}
                 </span>
 
                 <span
-                    className={`w-full flex justify-center items-center border-l border-light group-disabled:border-light/30 transition-all h-full`}
+                    className={`w-full flex justify-center items-center border-l group-hover:border-dark group-disabled:group-hover:border-light/30 border-light group-disabled:border-light/30 transition-all h-full `}
                 >
                     {loading ? (
                         <svg
@@ -39,7 +50,16 @@ const Button: React.FC<Props> = ({ onClick, loading = false, text, icon }) => {
                             />
                         </svg>
                     ) : (
-                        icon
+                        <span className="w-full h-full transition ease-[cubic-bezier(0.86,0,0.7,1)] duration-400 relative group-hover:bg-light">
+                            {cloneElement(icon as any, {
+                                className:
+                                    "w-6 lg:w-[36px] h-6 lg:h-[36px] text-light bottom-1/2 left-1/2 translate-y-1/2 -translate-x-1/2 absolute group-hover:bottom-[200%] transition-all ease-[cubic-bezier(0.86,0,0.7,1)] duration-400 delay-0",
+                            })}
+                            {cloneElement(icon as any, {
+                                className:
+                                    "w-6 lg:w-[36px] h-6 lg:h-[36px] text-dark group-hover:top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 absolute top-[200%] transition-all ease-[cubic-bezier(0.86,0,0.7,1)] duration-400 delay-0",
+                            })}
+                        </span>
                     )}
                 </span>
             </span>

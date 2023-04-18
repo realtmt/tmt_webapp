@@ -8,7 +8,11 @@ title: Retro Television - Mitsubishi
 */
 
 import React, { useRef, useState, useEffect } from "react"
-import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei"
+import {
+    MeshDistortMaterial,
+    MeshTransmissionMaterial,
+    useGLTF,
+} from "@react-three/drei"
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import * as THREE from "three"
 
@@ -49,7 +53,6 @@ export function Tv({ ready, src, ...props }: any) {
             window.innerWidth > 1280 ? setPosition(0.5) : setPosition(0)
         }
         resizeHandler()
-        video.setAttribute("playsinline", "true")
         window.addEventListener("resize", resizeHandler)
         return () => window.removeEventListener("resize", resizeHandler)
     }, [])
@@ -622,7 +625,7 @@ export function Tv({ ready, src, ...props }: any) {
                             geometry={nodes.Object_102.geometry}
                             material={materials.Screenshot}
                         >
-                            <meshStandardMaterial color={"white"}>
+                            <meshBasicMaterial color={"white"}>
                                 <videoTexture
                                     attach="map"
                                     args={[video]}
@@ -633,7 +636,7 @@ export function Tv({ ready, src, ...props }: any) {
                                     wrapS={THREE.RepeatWrapping}
                                     encoding={THREE.sRGBEncoding}
                                 />
-                            </meshStandardMaterial>
+                            </meshBasicMaterial>
                         </mesh>
                     </group>
                 </group>
