@@ -25,7 +25,7 @@ import {
 } from "@react-three/drei"
 import { Tv } from "./Tv.tsx"
 
-const Canvas = ({ ready, setReady, video }: any) => {
+const Canvas = ({ ready, setReady, video, isOpen }: any) => {
     useEffect(() => {
         setReady(true)
     }, [])
@@ -59,17 +59,17 @@ const Canvas = ({ ready, setReady, video }: any) => {
                 />
             </directionalLight>
             <Rig />
-            {/* <Environment preset="dawn" background={false} /> */}
+            <Environment preset="dawn" background={false} />
             <Suspense>
                 <group position={[0, -0.5, 0]}>
-                    <Tv ready={ready} src={video} />
+                    <Tv ready={ready} src={video} fullscreen={isOpen} />
                     <mesh rotation={[-Math.PI / 2, 0, 0]}>
                         <planeGeometry args={[50, 50]} />
                         <MeshReflectorMaterial
                             blur={[300, 200]}
                             resolution={dpr * 1024}
                             mixBlur={1}
-                            mixStrength={5}
+                            mixStrength={20}
                             roughness={20}
                             mirror={0.5}
                             depthScale={1.2}

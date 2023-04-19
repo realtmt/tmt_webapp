@@ -7,14 +7,18 @@ source: https://sketchfab.com/3d-models/retro-television-mitsubishi-6a9de08e1720
 title: Retro Television - Mitsubishi
 */
 
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useState, useEffect, Suspense } from "react"
 import {
     MeshDistortMaterial,
     MeshTransmissionMaterial,
+    useAspect,
     useGLTF,
+    useVideoTexture,
 } from "@react-three/drei"
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import * as THREE from "three"
+import { useThree } from "@react-three/fiber"
+import { motion } from "framer-motion-3d"
 
 type GLTFResult = GLTF & {
     nodes: any
@@ -23,11 +27,13 @@ type GLTFResult = GLTF & {
     } & any
 }
 
-export function Tv({ ready, src, ...props }: any) {
+export function Tv({ ready, src, fullscreen, ...props }: any) {
     const [position, setPosition] = useState(0.5)
     const { nodes, materials } = useGLTF(
         "/assets/models/retro_tv.glb"
     ) as unknown as GLTFResult
+    const texture = useVideoTexture(src)
+    const { viewport, camera } = useThree()
 
     const [video] = useState(() =>
         Object.assign(document.createElement("video"), {
@@ -615,30 +621,34 @@ export function Tv({ ready, src, ...props }: any) {
                             material={materials.Grey_Plastic}
                         />
                     </group>
-                    <group
-                        position={[0.01, 0.89, -0.05]}
-                        rotation={[Math.PI / 2, 0, 0]}
-                    >
-                        <mesh
+                    <motion.group animate={fullscreen ? "full" : "small"}>
+                        <motion.mesh
                             castShadow
                             receiveShadow
-                            geometry={nodes.Object_102.geometry}
-                            material={materials.Screenshot}
+                            variants={{
+                                full: {
+                                    scaleX: viewport.width,
+                                    scaleY: viewport.height,
+                                    x: camera.position.x - position,
+                                    y: camera.position.y,
+                                    z: 0.5,
+                                },
+                                small: {
+                                    scaleX: 1,
+                                    scaleY: 1,
+                                    x: 0,
+                                    y: 0,
+                                    z: 0,
+                                },
+                            }}
                         >
-                            <meshBasicMaterial color={"white"}>
-                                <videoTexture
-                                    attach="map"
-                                    args={[video]}
-                                    // flipY={false}
-                                    // repeat={[5, 9]}
-                                    // offset={[-0.1, 0]}
-                                    wrapT={THREE.RepeatWrapping}
-                                    wrapS={THREE.RepeatWrapping}
-                                    encoding={THREE.sRGBEncoding}
-                                />
-                            </meshBasicMaterial>
-                        </mesh>
-                    </group>
+                            <planeGeometry attach="geometry" args={[0.6, 1]} />
+                            <meshBasicMaterial
+                                map={texture}
+                                toneMapped={false}
+                            />
+                        </motion.mesh>
+                    </motion.group>
                 </group>
             </group>
         </group>

@@ -86,6 +86,7 @@ const Landing = () => {
                         ready={ready && video}
                         setReady={setReady}
                         video={video}
+                        isOpen={menuOpen}
                     />
                 </main>
             </Suspense>
